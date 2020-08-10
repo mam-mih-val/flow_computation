@@ -80,6 +80,9 @@ int main(){
   resolutions.back().SetName("res_W3(Mb,W2)");
   resolutions.push_back( Resolution3S( mf_w3, mb_w3, mf_mb ) );
   resolutions.back().SetName("res_W3(Mf,Mb)");
+  // F(R1,R2) --- random-sub method
+  resolutions.push_back( Ollitrault( r1_r2, 1 ) );
+  resolutions.back().SetName("res_F(R1,R2)");
 
   auto file_out = TFile::Open("fuck.root", "recreate");
   file_out->cd();

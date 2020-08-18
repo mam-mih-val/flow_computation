@@ -53,13 +53,18 @@ public:
       component = result;
     }
   }
+  void Merge();
   void Write(TFile *file) {
+    if (std::empty(name_)) {
+      std::cout << "Correlation::Write(): Name is not specified" << std::endl;
+    }
+    if( is_merged_ ){
+      merged_.Write(name_.c_str());
+      return;
+    }
     if (std::empty(components_names_)) {
       std::cerr << "Correlation::Write(): Component names are not specified"
                 << std::endl;
-    }
-    if (std::empty(name_)) {
-      std::cout << "Correlation::Write(): Name is not specified" << std::endl;
     }
     try {
       for (size_t i = 0; i < std::size(components_names_); ++i) {
@@ -88,6 +93,8 @@ private:
   std::string name_;
   std::vector<std::string> components_names_;
   std::vector<Qn::DataContainerStats> components_;
+  Qn::DataContainerStats merged_;
+  bool is_merged_{false};
 };
 
 } // namespace Computation

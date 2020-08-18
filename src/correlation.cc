@@ -44,6 +44,10 @@ Correlation operator/(const Correlation &num, const Correlation &den) {
   for (size_t i = 0; i < num.components_.size(); ++i) {
     auto arg1 = num.components_.at(i);
     auto arg2 = den.components_.at(i);
+    for( auto& bin : arg2  ) {
+      bin.SetWeights(Qn::Stats::Weights::REFERENCE);
+      bin.ResetBits(Qn::Stats::CORRELATEDERRORS);
+    }
     auto res = arg1 / arg2;
     result.components_.emplace_back(res);
   }
@@ -70,5 +74,13 @@ Correlation operator*(const Correlation &corr, const double &num) {
   }
   result.components_names_ = corr.components_names_;
   return result;
+}
+void Correlation::Merge(){
+  merged_ = components_.at(0);
+  for(size_t i=1; i<components_.size(); i++){
+    merged_=merged_+components_.at(i);
+  }
+  merged_ = merged_*(1.0 / (double) std::size(components_));
+  is_merged_ = true;
 }
 } // namespace Computation

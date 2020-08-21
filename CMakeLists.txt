@@ -27,6 +27,7 @@ include_directories(
 set(HEADERS
         src/correlation.h
         src/correlation_builder.h
+        src/functions.h
         )
 
 set(SOURCES

@@ -54,7 +54,7 @@ public:
     }
   }
   void Merge();
-  void Write(TFile *file) {
+  void Write() const {
     if (std::empty(name_)) {
       std::cout << "Correlation::Write(): Name is not specified" << std::endl;
     }
